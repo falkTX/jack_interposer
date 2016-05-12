@@ -1,3 +1,6 @@
 checkers.c
 jack_interposer.so
-
+test_cond_wait
+test_cond_wait_simple
+test_new
+test_printf
