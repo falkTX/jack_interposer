@@ -1,7 +1,12 @@
+
+CC ?= gcc
+
 TESTS=test_new test_cond_wait test_cond_wait_simple test_printf
 
+all: jack_interposer.so
+
 jack_interposer.so: jack_interposer.c checkers.c manual.c
-	gcc -Wall -fPIC -o jack_interposer.so -shared jack_interposer.c -pthread -ldl -ljack
+	$(CC) $< $(CFLAGS) -Wall -fPIC $(LDFLAGS) -shared -pthread -ldl -ljack -o jack_interposer.so
 
 checkers.c: functions checker_fragment.c
 	./generate_checkers.pl < functions
