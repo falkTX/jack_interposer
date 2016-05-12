@@ -6,13 +6,13 @@ TESTS=test_new test_cond_wait test_cond_wait_simple test_printf
 all: jack_interposer.so
 
 jack_interposer.so: jack_interposer.c checkers.c manual.c
-	$(CC) $< $(CFLAGS) -Wall -fPIC $(LDFLAGS) -shared -pthread -ldl -ljack -o jack_interposer.so
+	$(CC) $< $(CFLAGS) -Wall -fPIC $(LDFLAGS) -Wl,--no-undefined -shared -pthread -ldl -ljack -o jack_interposer.so
 
 checkers.c: functions checker_fragment.c
 	./generate_checkers.pl < functions
 
 .PHONY clean:
-	rm -f jack_interposer.so test_cond_wait test_cond_wait_simple || true
+	rm -f jack_interposer.so test_cond_wait test_cond_wait_simple
 
 test: $(TESTS) jack_interposer.so
 	LD_PRELOAD=./jack_interposer.so ./test_cond_wait_simple
