@@ -32,9 +32,8 @@ void * calloc(size_t nmemb, size_t size)
   if (in_rt)
   {
     printf("calloc() is called while in rt section\n");
-#if ABORT_ON_VIOLATION
-    abort();
-#endif
+    if (abort_on_violation)
+      abort();
   }
   if(!callocp)
   {
@@ -61,10 +60,9 @@ int pthread_cond_timedwait(pthread_cond_t * cond, pthread_mutex_t * mutex, const
 
   if (in_rt)
   {
-    printf("pthread_cond_timedwait() is called while in rt section\n");     
-#if ABORT_ON_VIOLATION
-    abort();
-#endif
+    printf("pthread_cond_timedwait() is called while in rt section\n");
+    if (abort_on_violation)
+      abort();
   }
 
   if(!func)
@@ -86,10 +84,9 @@ int pthread_cond_wait(pthread_cond_t * cond, pthread_mutex_t * mutex)
 
   if (in_rt)
   {
-    printf("pthread_cond_wait() is called while in rt section\n");     
-#if ABORT_ON_VIOLATION
-    abort();
-#endif
+    printf("pthread_cond_wait() is called while in rt section\n");
+    if (abort_on_violation)
+      abort();
   }
 
   if(!func)
