@@ -66,9 +66,14 @@ int pthread_cond_timedwait(pthread_cond_t * cond, pthread_mutex_t * mutex, const
   }
 
   if(!func)
-    //func = (int (*)(pthread_cond_t*, pthread_mutex_t*)) dlsym(RTLD_NEXT, "pthread_cond_wait");
+  {
+#ifdef __ARM_ARCH_7A__
+    func = (int (*)(pthread_cond_t*, pthread_mutex_t*, const struct timespec*)) dlsym(RTLD_NEXT, "pthread_cond_wait");
+#else
     // see http://forums.novell.com/novell-product-support-forums/suse-linux-enterprise-server-sles/sles-configure-administer/385705-sles-10-2-java-hung-calling-pthread_cond_timedwait.html
-    func = (int (*)()) dlvsym(RTLD_NEXT, "pthread_cond_timedwait", "GLIBC_2.3.2");
+    func = (int (*)(pthread_cond_t*, pthread_mutex_t*, const struct timespec*)) dlvsym(RTLD_NEXT, "pthread_cond_timedwait", "GLIBC_2.3.2");
+#endif
+  }
   if (func == NULL)
   {
     fprintf(stderr, "Error dlsym'ing\n");
@@ -90,9 +95,14 @@ int pthread_cond_wait(pthread_cond_t * cond, pthread_mutex_t * mutex)
   }
 
   if(!func)
-    //func = (int (*)(pthread_cond_t*, pthread_mutex_t*)) dlsym(RTLD_NEXT, "pthread_cond_wait");
+  {
+#ifdef __ARM_ARCH_7A__
+    func = (int (*)(pthread_cond_t*, pthread_mutex_t*)) dlsym(RTLD_NEXT, "pthread_cond_wait");
+#else
     // see http://forums.novell.com/novell-product-support-forums/suse-linux-enterprise-server-sles/sles-configure-administer/385705-sles-10-2-java-hung-calling-pthread_cond_timedwait.html
     func = (int (*)(pthread_cond_t*, pthread_mutex_t*)) dlvsym(RTLD_NEXT, "pthread_cond_wait", "GLIBC_2.3.2");
+#endif
+  }
   if (func == NULL)
   {
     fprintf(stderr, "Error dlsym'ing\n");
