@@ -9,7 +9,7 @@
 #include <jack/jack.h>
 #include <stdarg.h>
 
-#define ABORT_ON_VIOLATION 1
+static bool abort_on_violation = true;
 
 // Define THREAD_LOCAL as the keyword for thread-local storage if the compiler
 // supports it.
@@ -56,6 +56,9 @@ int jack_set_process_callback(jack_client_t* client,
 {
   static int (*func)() = NULL;
   int result;
+
+  if (getenv("JACK_INTERPOSER_NO_ABORT") != NULL)
+    abort_on_violation = false;
 
   fprintf(stderr, "jack_interposer: wrapping process callback\n");
 

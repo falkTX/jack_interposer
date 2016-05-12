@@ -6,9 +6,8 @@ $returntype $name($parameters)
   if (in_rt)
   {
     printf("$name() is called while in rt section\n");
-#if ABORT_ON_VIOLATION
-    abort();
-#endif
+    if (abort_on_violation)
+      abort();
   }
   if(!func)
   {
