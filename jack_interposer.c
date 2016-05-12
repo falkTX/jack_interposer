@@ -8,6 +8,7 @@
 #include <poll.h>
 #include <jack/jack.h>
 #include <stdarg.h>
+#include <semaphore.h>
 
 static bool abort_on_violation = true;
 
