@@ -6,8 +6,8 @@ jack_interposer.so: jack_interposer.c checkers.c manual.c
 checkers.c: functions checker_fragment.c
 	./generate_checkers.pl < functions
 
-.PHONY clean: 
-	rm jack_interposer.so test_cond_wait test_cond_wait_simple || true
+.PHONY clean:
+	rm -f jack_interposer.so test_cond_wait test_cond_wait_simple || true
 
 test: $(TESTS) jack_interposer.so
 	LD_PRELOAD=./jack_interposer.so ./test_cond_wait_simple
