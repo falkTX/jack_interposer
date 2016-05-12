@@ -2,7 +2,7 @@
 CC  ?= gcc
 CXX ?= g++
 
-CFLAGS  += $(shell pkg-config --cflags jack)
+CFLAGS  += $(shell pkg-config --cflags jack) -O0 -g
 LDFLAGS += $(shell pkg-config --libs jack)
 
 TESTS=test_new test_cond_wait test_cond_wait_simple test_printf
