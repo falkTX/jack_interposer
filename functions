@@ -21,3 +21,11 @@ unsigned int|sleep|unsigned int seconds|seconds
 int|vprintf|const char* format, va_list ap|format, ap
 int|vfprintf|FILE* stream, const char* format, va_list ap|stream, format, ap
 pid_t|wait|int* status|status
+int|open|const char* pathname, int flags, mode_t mode|pathname, flags, mode
+int|openat|int dirfd, const char* pathname, int flags, mode_t mode|dirfd, pathname, flags, mode
+int|creat|const char* pathname, mode_t mode|pathname, mode
+int|close|int fd|fd
+ssize_t|read|int fd, void* buf, size_t count|fd, buf, count
+ssize_t|write|int fd, const void* buf, size_t count|fd, buf, count
+void|sync|void|
+int|syncfs|int fd|fd
